@@ -1,27 +1,36 @@
-import React from "react";
-import {
-  UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
-} from "@ant-design/icons";
-import { Layout, Menu } from "antd";
+import { Layout, Menu, MenuProps } from "antd";
+import { Outlet } from "react-router-dom";
 
 const { Header, Content, Footer, Sider } = Layout;
 
-const items = [
-  UserOutlined,
-  VideoCameraOutlined,
-  UploadOutlined,
-  UserOutlined,
-].map((icon, index) => ({
-  key: String(index + 1),
-  icon: React.createElement(icon),
-  label: `nav ${index + 1}`,
-}));
+const items: MenuProps["items"] = [
+  {
+    key: "1",
+    label: "Dashboard",
+  },
+  {
+    key: "2",
+    label: "Profile",
+  },
+  {
+    key: "3",
+    label: "User Management",
+    children: [
+      {
+        key: "11",
+        label: "Create Admin",
+      },
+      {
+        key: "21",
+        label: "Create Student",
+      },
+    ],
+  },
+];
 
 const MainLayout = () => {
   return (
-    <Layout>
+    <Layout style={{ minHeight: "100vh" }}>
       <Sider
         breakpoint="lg"
         collapsedWidth="0"
@@ -32,7 +41,12 @@ const MainLayout = () => {
           console.log(collapsed, type);
         }}
       >
-        <div className="demo-logo-vertical" />
+        <div
+          style={{ color: "white", textAlign: "center", margin: "24px 0" }}
+          className="demo-logo-vertical"
+        >
+          <h2>University Management</h2>
+        </div>
         <Menu
           theme="dark"
           mode="inline"
@@ -49,7 +63,7 @@ const MainLayout = () => {
               minHeight: 360,
             }}
           >
-            Main Content Here
+            <Outlet />
           </div>
         </Content>
         <Footer style={{ textAlign: "center" }}>

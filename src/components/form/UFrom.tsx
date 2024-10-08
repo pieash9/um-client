@@ -1,3 +1,4 @@
+import { Form } from "antd";
 import {
   FieldValues,
   FormProvider,
@@ -24,7 +25,9 @@ const UFrom = ({ onSubmit, children, defaultValues }: TFormProps) => {
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)}>{children}</form>
+      <Form layout="vertical" onFinish={methods.handleSubmit(onSubmit)}>
+        {children}
+      </Form>
     </FormProvider>
   );
 };

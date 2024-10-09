@@ -4,6 +4,8 @@ import { Button, Col, Flex } from "antd";
 import USelect from "../../../components/form/USelect";
 import { semesterOptions } from "../../../constants/sesemster";
 import { monthOptions } from "../../../constants/global";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { academicSemesterSchema } from "../../../academicManagement.schema";
 
 const currentYear = new Date().getFullYear();
 const yearOptions = [0, 1, 2, 3, 4].map((number) => ({
@@ -27,11 +29,18 @@ const CreateAcademicSemester = () => {
   return (
     <Flex justify="center" align="middle">
       <Col span={6}>
-        <UFrom onSubmit={onSubmit}>
+        <UFrom
+          onSubmit={onSubmit}
+          resolver={zodResolver(academicSemesterSchema)}
+        >
           <USelect options={semesterOptions} label="Name" name="name" />
           <USelect options={yearOptions} label="Year" name="year" />
-          <USelect options={monthOptions} label="Name" name="startMonth" />
-          <USelect options={monthOptions} label="Name" name="endMonth" />
+          <USelect
+            options={monthOptions}
+            label="Start Month"
+            name="startMonth"
+          />
+          <USelect options={monthOptions} label="End Month" name="endMonth" />
           <Button htmlType="submit">Submit</Button>
         </UFrom>
       </Col>

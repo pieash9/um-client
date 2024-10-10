@@ -22,6 +22,7 @@ const USelect = ({ label, name, options }: USelectProps) => {
             {...field}
             style={{ width: "100%" }}
             options={options}
+            placeholder="Select an option"
           />
           {error && <small style={{ color: "red" }}>{error?.message}</small>}
         </Form.Item>

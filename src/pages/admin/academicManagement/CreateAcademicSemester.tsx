@@ -51,7 +51,7 @@ const CreateAcademicSemester = () => {
   };
 
   return (
-    <Flex justify="center" align="middle">
+    <Flex justify="center" align="center">
       <Col span={6}>
         <UFrom
           onSubmit={onSubmit}

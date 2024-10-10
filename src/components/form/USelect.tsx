@@ -4,14 +4,17 @@ import { Controller } from "react-hook-form";
 type USelectProps = {
   label: string;
   name: string;
-  options: {
-    label: string;
-    value: string;
-    disabled?: boolean;
-  }[];
+  disabled?: boolean;
+  options:
+    | {
+        label: string;
+        value: string;
+        disabled?: boolean;
+      }[]
+    | undefined;
 };
 
-const USelect = ({ label, name, options }: USelectProps) => {
+const USelect = ({ label, name, options, disabled }: USelectProps) => {
   return (
     <Controller
       name={name}
@@ -23,6 +26,7 @@ const USelect = ({ label, name, options }: USelectProps) => {
             style={{ width: "100%" }}
             options={options}
             placeholder="Select an option"
+            disabled={disabled}
           />
           {error && <small style={{ color: "red" }}>{error?.message}</small>}
         </Form.Item>

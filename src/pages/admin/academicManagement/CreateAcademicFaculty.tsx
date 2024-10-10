@@ -3,7 +3,7 @@ import UFrom from "../../../components/form/UFrom";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import USelect from "../../../components/form/USelect";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { academicFacultySchema } from "../../../academicManagement.schema";
+import { academicFacultySchema } from "../../../schemas/academicManagement.schema";
 import { useAddAcademicFacultyMutation } from "../../../redux/features/admin/academicManagement.api";
 import { TAcademicFaculty, TResponse } from "../../../types";
 import { toast } from "sonner";

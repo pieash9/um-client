@@ -1,7 +1,7 @@
-import { FieldValues, SubmitHandler } from "react-hook-form";
+import { Controller, FieldValues, SubmitHandler } from "react-hook-form";
 import UFrom from "../../../components/form/UFrom";
 import UInput from "../../../components/form/UInput";
-import { Button, Col, Divider, Row } from "antd";
+import { Button, Col, Divider, Form, Input, Row } from "antd";
 import USelect from "../../../components/form/USelect";
 import { bloodGroupOptions, genderOptions } from "../../../constants/global";
 import UDatePicker from "../../../components/form/UDatePicker";
@@ -11,44 +11,44 @@ import {
 } from "../../../redux/features/admin/academicManagement.api";
 import { useAddStudentMutation } from "../../../redux/features/admin/userManagement.api";
 
-const studentDummyData = {
-  password: "student123",
-  student: {
-    name: {
-      firstName: "I am ",
-      middleName: "Student",
-      lastName: "Number 1",
-    },
-    gender: "male",
-    dateOfBirth: "1990-01-01",
-    bloogGroup: "A+",
+// const studentDummyData = {
+//   password: "student123",
+//   student: {
+//     name: {
+//       firstName: "I am ",
+//       middleName: "Student",
+//       lastName: "Number 1",
+//     },
+//     gender: "male",
+//     dateOfBirth: "1990-01-01",
+//     bloogGroup: "A+",
 
-    email: "student2@gmail.com",
-    contactNo: "1235678",
-    emergencyContactNo: "987-654-3210",
-    presentAddress: "123 Main St, Cityville",
-    permanentAddress: "456 Oak St, Townsville",
+//     email: "student2@gmail.com",
+//     contactNo: "1235678",
+//     emergencyContactNo: "987-654-3210",
+//     presentAddress: "123 Main St, Cityville",
+//     permanentAddress: "456 Oak St, Townsville",
 
-    guardian: {
-      fatherName: "James Doe",
-      fatherOccupation: "Engineer",
-      fatherContactNo: "111-222-3333",
-      motherName: "Mary Doe",
-      motherOccupation: "Teacher",
-      motherContactNo: "444-555-6666",
-    },
+//     guardian: {
+//       fatherName: "James Doe",
+//       fatherOccupation: "Engineer",
+//       fatherContactNo: "111-222-3333",
+//       motherName: "Mary Doe",
+//       motherOccupation: "Teacher",
+//       motherContactNo: "444-555-6666",
+//     },
 
-    localGuardian: {
-      name: "Alice Johnson",
-      occupation: "Doctor",
-      contactNo: "777-888-9999",
-      address: "789 Pine St, Villageton",
-    },
+//     localGuardian: {
+//       name: "Alice Johnson",
+//       occupation: "Doctor",
+//       contactNo: "777-888-9999",
+//       address: "789 Pine St, Villageton",
+//     },
 
-    admissionSemester: "65b0104110b74fcbd7a25d92",
-    academicDepartment: "65b00fb010b74fcbd7a25d8e",
-  },
-};
+//     admissionSemester: "65b0104110b74fcbd7a25d92",
+//     academicDepartment: "65b00fb010b74fcbd7a25d8e",
+//   },
+// };
 
 // ! this is for only development purpose
 const studentDefaultValues = {
@@ -107,12 +107,14 @@ const CreateStudent = () => {
   }));
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    console.log(data);
     const studentData = {
       password: "student123",
       student: data,
     };
     const formData = new FormData();
     formData.append("data", JSON.stringify(studentData));
+    formData.append("file", data.image);
 
     // console.log(Object.fromEntries(formData));
     const res = await addStudent(formData);
@@ -145,6 +147,21 @@ const CreateStudent = () => {
                 options={bloodGroupOptions}
                 name="bloogGroup"
                 label="Blood Group"
+              />
+            </Col>
+            <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+              <Controller
+                name="image"
+                render={({ field: { onChange, value, ...field } }) => (
+                  <Form.Item label="Image">
+                    <Input
+                      value={value?.fileName}
+                      type="file"
+                      {...field}
+                      onChange={(e) => onChange(e.target.files?.[0])}
+                    />
+                  </Form.Item>
+                )}
               />
             </Col>
           </Row>

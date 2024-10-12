@@ -12,15 +12,23 @@ type USelectProps = {
         disabled?: boolean;
       }[]
     | undefined;
+  mode?: "multiple" | undefined;
 };
 
-const USelect = ({ label, name, options, disabled }: USelectProps) => {
+const USelect = ({
+  label,
+  name,
+  options,
+  disabled,
+  mode = undefined,
+}: USelectProps) => {
   return (
     <Controller
       name={name}
       render={({ field, fieldState: { error } }) => (
         <Form.Item label={label}>
           <Select
+            mode={mode}
             size="large"
             {...field}
             style={{ width: "100%" }}

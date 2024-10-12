@@ -14,7 +14,13 @@ const UInput = ({ type, name, label }: TInputProps) => {
         name={name}
         render={({ field, fieldState: { error } }) => (
           <Form.Item label={label}>
-            <Input size="large" type={type} id={name} {...field} />
+            <Input
+              placeholder="Enter"
+              size="large"
+              type={type}
+              id={name}
+              {...field}
+            />
             {error && <small style={{ color: "red" }}>{error?.message}</small>}
           </Form.Item>
         )}

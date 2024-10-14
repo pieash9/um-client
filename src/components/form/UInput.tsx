@@ -5,9 +5,10 @@ type TInputProps = {
   type: string;
   name: string;
   label?: string;
+  disabled?: boolean;
 };
 
-const UInput = ({ type, name, label }: TInputProps) => {
+const UInput = ({ type, name, label, disabled }: TInputProps) => {
   return (
     <div style={{ marginBottom: "20px" }}>
       <Controller
@@ -20,6 +21,7 @@ const UInput = ({ type, name, label }: TInputProps) => {
               type={type}
               id={name}
               {...field}
+              disabled={disabled}
             />
             {error && <small style={{ color: "red" }}>{error?.message}</small>}
           </Form.Item>

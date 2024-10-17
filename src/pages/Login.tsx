@@ -16,7 +16,7 @@ const Login = () => {
 
   const defaultValues = {
     id: "2025010001",
-    password: "student123",
+    password: "123456",
   };
 
   const onSubmit = async (data: FieldValues) => {
@@ -27,7 +27,13 @@ const Login = () => {
       const user = verifyToken(res.data.accessToken) as TUser;
       dispatch(setUser({ user: user, token: res.data.accessToken }));
       toast.success("Login successful", { id: toastId, duration: 2000 });
-      navigate(`/${user.role}/dashboard`);
+
+      if (res?.data?.needsPasswordChange) {
+        navigate(`/change-password`);
+      } else {
+        navigate(`/${user.role}/dashboard`);
+      }
+
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
       toast.error("Something went wrong", { id: toastId, duration: 2000 });

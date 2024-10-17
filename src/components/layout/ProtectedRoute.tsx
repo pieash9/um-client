@@ -2,10 +2,11 @@ import { ReactNode } from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import {
   logout,
-  selectCurrentUser,
+  TUser,
   useCurrentToken,
 } from "../../redux/features/auth/authSlice";
 import { Navigate } from "react-router-dom";
+import { verifyToken } from "../../utils/verifyToken";
 
 type TProtectedRouteProps = {
   children: ReactNode;
@@ -13,12 +14,15 @@ type TProtectedRouteProps = {
 };
 
 const ProtectedRoute = ({ children, role }: TProtectedRouteProps) => {
-  const token = useAppSelector(useCurrentToken);
-  const user = useAppSelector(selectCurrentUser);
-
   const dispatch = useAppDispatch();
+  const token = useAppSelector(useCurrentToken);
 
-  if (role !== undefined && user?.role !== role) {
+  let user;
+  if (token) {
+    user = verifyToken(token);
+  }
+
+  if (role !== undefined && (user as TUser)?.role !== role) {
     dispatch(logout());
     return <Navigate to={"/login"} replace={true} />;
   }
